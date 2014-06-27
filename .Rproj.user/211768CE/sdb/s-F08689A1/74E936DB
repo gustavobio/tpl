@@ -1,0 +1,16 @@
+{
+    "contents" : "#' Suggest a valid name from a misspelled one\n#' \n#' This function tries to suggest a valid name according to The Plant List using\n#' a possibly incorrect one as a starting point.\n#' \n#' @param taxon a character vector containing a single name\n#' @param max.distance a numeric value indicating how conservative the function \n#'   should be when searching for suggestions. Values close to 1 are very \n#'   conservative\n#' @param return.na a logical indicating whether to return a \\code{NA} or the original \n#'   input when no suggestion is found\n#' @param ignore.words \\code{NULL} or a character vector with words to be ignored by the function. \n#'   Useful if you are automatizing a workflow and wants the function to ignore\n#'   words or phrases such as \"not found\", \"dead\", \"undetermined\", and so on\n#' @export\n#' @return A character vector or \\code{NA}\n#' @examples\n#' suggest.name(\"Cofea arabyca\")\n#' suggest.name(\"Myrcia bela\")\nsuggest.name <-\n  function(taxon, max.distance = 0.75, return.na = TRUE, ignore.words = NULL) {\n    \"%in?%\" <- function(x, table) fmatch(x, table, nomatch = 0) > 0\n    taxon <- fixCase(taxon)\n    taxon.orig <- taxon\n    uncertain <- regmatches(taxon, regexpr(\"[a|c]f+\\\\.\", taxon))\n    taxon <- gsub(\"^\\\\s+|\\\\s+$\", \"\", taxon)\n    if (length(uncertain) != 0L) taxon <- gsub(\"[a|c]f+\\\\.\", \"\", taxon)\n    #if (any(grepl(taxon, ignore.words, ignore.case = TRUE))) return(taxon)\n    #if (grepl(\"Indet\\\\.\", taxon)) return(taxon)\n    ident <- regmatches(taxon, regexpr(\"\\\\s+sp\\\\.+\\\\w*\", taxon))\n    if (length(ident) != 0L) taxon <- unlist(strsplit(taxon, \" \"))[1]\n    if (taxon == \"\") return(NA)\n    if (!is.na(fmatch(taxon, tpl.names))) return(taxon)\n    initials <- substr(strsplit(taxon, \" \")[[1]], 1, 1)\n    l1 <- length(taxon)\n    l2 <- length(tpl.names[[initials[1]]][[initials[2]]])\n    out <- adist(taxon, tpl.names[[initials[1]]][[initials[2]]])\n    distance <- 1 - (out/pmax(nchar(taxon), \n                                  nchar(tpl.names[[initials[1]]][[initials[2]]])))\n    max.dist <- max(distance, na.rm = TRUE)\n    if (max.dist >= max.distance) {\n      if (length(ident) == 0L) {\n        res <- tpl.names[[initials[1]]][[initials[2]]][distance == max(distance, na.rm = TRUE)][1]\n        if (length(uncertain) == 0L) {\n          return(res)\n        } else {\n          res <- unlist(strsplit(res, \" \"))\n          return(paste(res[1], uncertain, res[2:length(res)]))\n        }\n      } else {\n        paste(tpl.names[[initials[1]]][[initials[2]]][distance == max(distance, na.rm = TRUE)][1], ident, sep = \"\")\n      }\n    } else {\n      if (return.na) {\n        NA\n      } else {\n        taxon.orig\n      }\n    }\n  }\n",
+    "created" : 1402058238550.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1068612066",
+    "id" : "74E936DB",
+    "lastKnownWriteTime" : 1403842084,
+    "path" : "~/Documents/tpl/R/suggest.name.R",
+    "project_path" : "R/suggest.name.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

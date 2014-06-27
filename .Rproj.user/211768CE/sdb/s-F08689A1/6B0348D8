@@ -1,0 +1,16 @@
+{
+    "contents" : "Package: tpl\nType: Package\nTitle: interacting with The Plant List\nVersion: 0.1\nDate: 2014-06-04\nAuthor: Gustavo Carvalho\nMaintainer: Gustavo Carvalho <gustavo.bio@gmail.com>\nDepends:\n    tpldata,\n    R (>= 3.0.2)\nImports:\n    flora,\n    fastmatch (>= 1.1)\nDescription: This is a set of tools for interacting with The Plant List. With\n    this package, you can quickly look up up to thousands of plant names,\n    automatically correcting spelling errors and fixing synonyms.\nLicense: GPL\nLazyData: yes\n",
+    "created" : 1402019521773.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "808942035",
+    "id" : "6B0348D8",
+    "lastKnownWriteTime" : 1403842621,
+    "path" : "~/Documents/tpl/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "dcf"
+}

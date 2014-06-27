@@ -1,0 +1,9 @@
+{
+    "path" : "~/Documents/tpl",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
