@@ -3,10 +3,11 @@ tpl
 
 This R package includes functions to query the latest version of The Plant List database alongside with a shiny web application as an alternative front end.
 
-To install the package, first you need devtools:
+To install the package, first you need devtools and shiny:
 
 ```
 install.packages("devtools")
+install.packages("shiny")
 library("devtools")
 ```
 
