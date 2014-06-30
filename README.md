@@ -33,7 +33,8 @@ install_github("gustavobio/tpl")
 The main function is `tpl.get` (the first call builds the hash table for fastmatch, so it takes a while. Following calls are much faster):
 
 ```
-tpl.get(c("Miconia albicans", "Myrcia lingua")
+library(tpl)
+tpl.get(c("Miconia albicans", "Myrcia lingua"))
 ```
 
 There is also a web app (same applies, first calls build the hash tables):
