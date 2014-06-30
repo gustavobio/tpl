@@ -34,7 +34,7 @@ The main function is `tpl.get` (the first call builds the hash table for fastmat
 
 ```
 library(tpl)
-tpl.get(c("Miconia albicans", "Myrcia lingua"))
+tpl.get(c("Miconia albicans", "Myrcia lingua", "Cofea arabica"))
 ```
 
 There is also a web app (same applies, first calls build the hash tables):
