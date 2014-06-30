@@ -10,6 +10,7 @@ Depends:
     R (>= 3.0.2)
 Imports:
     flora,
+    shiny,
     fastmatch (>= 1.1)
 Description: This is a set of tools for interacting with The Plant List. With
     this package, you can quickly look up up to thousands of plant names,

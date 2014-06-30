@@ -3,6 +3,8 @@
 export(noauthors)
 export(suggest.name)
 export(tpl.get)
+export(web.tpl)
 import(fastmatch)
 import(flora)
+import(shiny)
 import(tpldata)
