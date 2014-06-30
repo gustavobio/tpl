@@ -31,7 +31,9 @@ install_github("gustavobio/tpl")
 
 The main function is `tpl.get`:
 
+```
 tpl.get(c("Miconia albicans", "Myrcia lingua")
+```
 
 There is also a web app:
 
