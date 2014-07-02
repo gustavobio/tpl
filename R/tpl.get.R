@@ -4,16 +4,17 @@
 #' misspelled names are resolved automatically.
 #' 
 #' @param taxa a character vector containing one or more taxa, without authors 
-#'   see \code{\link{remove.authors}} if you have a list with authorities
+#'   see \code{\link{noauthors}} if you have a list with authorities
 #' @param replace.synonyms should the function automatically replace synonyms?
 #' @param suggest.names should the function try to suggest corrections for spelling errors?
 #' @return a data frame
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{
 #' tpl.get("Myrcia lingua")
+#' }
 tpl.get <-
   function(taxa, replace.synonyms = TRUE, suggest.names = TRUE)  {
-    "%in?%" <- function(x, table) fmatch(x, table, nomatch = 0) > 0
     taxa <- trim(taxa)
     taxa <- taxa[nzchar(taxa)]
     if (length(taxa) == 0L) stop("No valid names provided.")
@@ -39,7 +40,8 @@ tpl.get <-
       }
       
       initials <- substr(strsplit(taxon, " ")[[1]], 1, 1)
-      found <- taxon %in?% tpl.names[[initials[1]]][[initials[2]]]
+      
+      found <- taxon %in% tpl.names[[initials[1]]][[initials[2]]]
       
       if (!found) {
         if (suggest.names) {
@@ -57,13 +59,13 @@ tpl.get <-
       }
       
       genus <- strsplit(taxon, " ")[[1]][1]
-      #if (genus %in?% names(tpl.accepted)) {
-      accepted <- taxon %in?% tpl.accepted[[genus]]$name
+      #if (genus %in% names(tpl.accepted)) {
+      accepted <- taxon %in% tpl.accepted[[genus]]$name
       #} else {
       #  accepted <- FALSE
       #}
       if (accepted) {
-        taxon.info <- tpl.accepted[[genus]][which(tpl.accepted[[genus]]$name %in?% taxon), ]
+        taxon.info <- tpl.accepted[[genus]][which(tpl.accepted[[genus]]$name %in% taxon), ]
         how.many.accepted <- nrow(taxon.info)
         if (how.many.accepted == 1L) {
           res[index, minus.notes] <- taxon.info
@@ -74,10 +76,10 @@ tpl.get <-
         next
       }
       
-      synonym <- taxon %in?% tpl.synonyms[[genus]]$name
+      synonym <- taxon %in% tpl.synonyms[[genus]]$name
       
       if (synonym) {
-        taxon.info <- tpl.synonyms[[genus]][which(tpl.synonyms[[genus]]$name %in?% taxon), ]
+        taxon.info <- tpl.synonyms[[genus]][which(tpl.synonyms[[genus]]$name %in% taxon), ]
         how.many.synonyms <- nrow(taxon.info)
         if (replace.synonyms) {
           how.many.accepted <- sum(nzchar(unique(taxon.info$accepted.id)))
@@ -91,13 +93,13 @@ tpl.get <-
             }
           }
           if (how.many.accepted == 1L) {
-            accepted.genus <- unique(tpl.accepted.index$genus[fmatch(taxon.info$accepted.id, tpl.accepted.index$id)])
+            accepted.genus <- unique(tpl.accepted.index$genus[match(taxon.info$accepted.id, tpl.accepted.index$id)])
             if (length(accepted.genus) == 1L) {
               tpl.accepted.genus <- tpl.accepted[[accepted.genus]]
             } else {
               tpl.accepted.genus <- do.call(rbind.data.frame, tpl.accepted[accepted.genus])
             }
-            accepted.ids <- tpl.accepted.genus$id %in?% taxon.info$accepted.id
+            accepted.ids <- tpl.accepted.genus$id %in% taxon.info$accepted.id
             if (!any(accepted.ids)) {
               note <- c(note, "check unresolved accepted")
               res[index, "note"] <- paste(note, collapse = "|")
@@ -117,9 +119,9 @@ tpl.get <-
             }
           }
           if (how.many.accepted > 1L) {
-            accepted.genus <- tpl.accepted.index$genus[fmatch(unique(taxon.info$id), tpl.accepted.index$id)]
+            accepted.genus <- tpl.accepted.index$genus[match(unique(taxon.info$id), tpl.accepted.index$id)]
             tpl.accepted.genus <- do.call(rbind.data.frame, tpl.accepted[accepted.genus])
-            taxon.info <- tpl.accepted.genus[which(tpl.accepted.genus$id %in?% taxon.info$accepted.id), ]
+            taxon.info <- tpl.accepted.genus[which(tpl.accepted.genus$id %in% taxon.info$accepted.id), ]
             really.accepted <- taxon.info$taxonomic.status.in.tpl == "Accepted"
             if (sum(really.accepted) == 0L) {
               note <- c(note, "check false accepted")
@@ -143,10 +145,10 @@ tpl.get <-
         res[index, "note"] <- paste(note, collapse = "|")
         next
       }      
-      misapplied <- taxon %in?% tpl.misapplied[[genus]]$name
+      misapplied <- taxon %in% tpl.misapplied[[genus]]$name
       
       if (misapplied) {
-        taxon.info <- tpl.misapplied[[genus]][which(tpl.misapplied[[genus]]$name %in?% taxon), ]
+        taxon.info <- tpl.misapplied[[genus]][which(tpl.misapplied[[genus]]$name %in% taxon), ]
         if (nrow(taxon.info) == 1L) {
           res[index, minus.notes] <- taxon.info
         } else {
@@ -156,10 +158,10 @@ tpl.get <-
         next
       }
       
-      unresolved <- taxon %in?% tpl.unresolved[[genus]]$name
+      unresolved <- taxon %in% tpl.unresolved[[genus]]$name
       
       if (unresolved) {
-        taxon.info <- tpl.unresolved[[genus]][which(tpl.unresolved[[genus]]$name %in?% taxon), ]
+        taxon.info <- tpl.unresolved[[genus]][which(tpl.unresolved[[genus]]$name %in% taxon), ]
         if (nrow(taxon.info) == 1L) {
           res[index, minus.notes] <- taxon.info
         } else {

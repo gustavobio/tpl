@@ -28,7 +28,9 @@ This function tries to suggest a valid name according to The Plant List using
 a possibly incorrect one as a starting point.
 }
 \examples{
+\dontrun{
 suggest.name("Cofea arabyca")
 suggest.name("Myrcia bela")
+}
 }
 

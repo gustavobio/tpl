@@ -15,11 +15,13 @@
 #' @export
 #' @return A character vector or \code{NA}
 #' @examples
+#' \dontrun{
 #' suggest.name("Cofea arabyca")
 #' suggest.name("Myrcia bela")
+#' }
 suggest.name <-
   function(taxon, max.distance = 0.75, return.na = TRUE, ignore.words = NULL) {
-    "%in?%" <- function(x, table) fmatch(x, table, nomatch = 0) > 0
+    "%in?%" <- function(x, table) match(x, table, nomatch = 0) > 0
     taxon <- fixCase(taxon)
     taxon.orig <- taxon
     uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", taxon))
@@ -30,8 +32,8 @@ suggest.name <-
     ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", taxon))
     if (length(ident) != 0L) taxon <- unlist(strsplit(taxon, " "))[1]
     if (taxon == "") return(NA)
-    if (!is.na(fmatch(taxon, tpl.names))) return(taxon)
     initials <- substr(strsplit(taxon, " ")[[1]], 1, 1)
+    if (!is.na(match(taxon, tpl.names[[initials[1]]][[initials[2]]]))) return(taxon)
     l1 <- length(taxon)
     l2 <- length(tpl.names[[initials[1]]][[initials[2]]])
     out <- adist(taxon, tpl.names[[initials[1]]][[initials[2]]])

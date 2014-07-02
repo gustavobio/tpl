@@ -7,7 +7,7 @@ tpl.get(taxa, replace.synonyms = TRUE, suggest.names = TRUE)
 }
 \arguments{
 \item{taxa}{a character vector containing one or more taxa, without authors
-see \code{\link{remove.authors}} if you have a list with authorities}
+see \code{\link{noauthors}} if you have a list with authorities}
 
 \item{replace.synonyms}{should the function automatically replace synonyms?}
 
@@ -21,6 +21,8 @@ This function collects taxonomic information from The Plant List. Synonyms and
 misspelled names are resolved automatically.
 }
 \examples{
+\dontrun{
 tpl.get("Myrcia lingua")
+}
 }
 
