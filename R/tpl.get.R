@@ -7,7 +7,7 @@
 #'   see \code{\link{noauthors}} if you have a list with authorities
 #' @param replace.synonyms should the function automatically replace synonyms?
 #' @param suggest.names should the function try to suggest corrections for spelling errors?
-#' @param NULL or character vector with columns from original dataset to drop.
+#' @param drop NULL or character vector with columns from original dataset to drop.
 #' @return a data frame
 #' @export
 #' @examples

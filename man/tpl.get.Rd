@@ -5,7 +5,8 @@
 \usage{
 tpl.get(taxa, replace.synonyms = TRUE, suggest.names = TRUE,
   drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker",
-  "ipni.id", "publication", "collation", "page", "date"))
+  "nomenclatural.status.from.original.data.source", "ipni.id", "source.id",
+  "publication", "collation", "page", "date"))
 }
 \arguments{
 \item{taxa}{a character vector containing one or more taxa, without authors
