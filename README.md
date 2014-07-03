@@ -13,7 +13,7 @@ All data from The Plant List are included in [tpldata](http://github.com/gustavo
 
 ## Instalation
 
-### Install devtools and shiny:
+#### Install devtools and shiny
 
 ```coffee
 install.packages("devtools")
@@ -21,13 +21,13 @@ install.packages("shiny")
 library("devtools")
 ```
 
-### Install tpldata (this is a 50 Mb download):
+#### Install tpldata (this is a 50 Mb download)
 
 ```coffee
 install_github("gustavobio/tpldata")
 ```
 
-### Install tpl:
+#### Install tpl
 
 ```coffee
 install_github("gustavobio/tpl")
@@ -43,17 +43,17 @@ tpl.get(c("Miconia albicans", "Myrcia lingua", "Cofea arabica"))
 ```
 
 ```coffee
-            id          family   genus    species infraspecific.rank infraspecific.epithet   authorship taxonomic.status.in.tpl nomenclatural.status.from.original.data.source confidence.level source source.id accepted.id
-1 tro-20300135 Melastomataceae Miconia   albicans                                          (Sw.) Steud.                Accepted                                                               M    TRO  20300135            
-2   kew-131274       Myrtaceae  Myrcia guianensis                                           (Aubl.) DC.                Accepted                                                               H   WCSP    131274            
-3    kew-45400       Rubiaceae  Coffea    arabica                                                    L.                Accepted                                                               H   WCSP     45400            
-               name             note  original.search
-1  Miconia albicans                  Miconia albicans
-2 Myrcia guianensis replaced synonym    Myrcia lingua
-3    Coffea arabica   was misspelled    Cofea arabica
+            id          family   genus    species infraspecific.rank infraspecific.epithet   authorship taxonomic.status.in.tpl confidence.level source
+1 tro-20300135 Melastomataceae Miconia   albicans                                          (Sw.) Steud.                Accepted                M    TRO
+2   kew-131274       Myrtaceae  Myrcia guianensis                                           (Aubl.) DC.                Accepted                H   WCSP
+3    kew-45400       Rubiaceae  Coffea    arabica                                                    L.                Accepted                H   WCSP
+  accepted.id              name             note  original.search
+1              Miconia albicans                  Miconia albicans
+2             Myrcia guianensis replaced synonym    Myrcia lingua
+3                Coffea arabica   was misspelled    Cofea arabica
 ```
 
-## Web application:
+## Web application
 
 There is a web application included where one can simply paste names into a textbox and get taxonomic information, links to the original data source, search within the results and export to a csv file.
 
