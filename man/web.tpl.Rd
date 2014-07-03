@@ -6,7 +6,6 @@
 web.tpl()
 }
 \description{
-This function starts a local webserver to run the shiny app distributed with
-the package.
+Web application to interact to query The Plant List database.
 }
 

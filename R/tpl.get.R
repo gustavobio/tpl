@@ -7,6 +7,7 @@
 #'   see \code{\link{noauthors}} if you have a list with authorities
 #' @param replace.synonyms should the function automatically replace synonyms?
 #' @param suggest.names should the function try to suggest corrections for spelling errors?
+#' @param NULL or character vector with columns from original dataset to drop.
 #' @return a data frame
 #' @export
 #' @examples
@@ -14,7 +15,7 @@
 #' tpl.get("Myrcia lingua")
 #' }
 tpl.get <-
-  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE)  {
+  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"))  {
     taxa <- trim(taxa)
     taxa <- taxa[nzchar(taxa)]
     if (length(taxa) == 0L) stop("No valid names provided.")
@@ -89,7 +90,7 @@ tpl.get <-
               res[index, minus.notes] <- taxon.info
             }
             if (how.many.synonyms > 1L) {
-                note <- c(note, "check no accepted +1 synonyms")
+              note <- c(note, "check no accepted +1 synonyms")
             }
           }
           if (how.many.accepted == 1L) {
@@ -171,5 +172,9 @@ tpl.get <-
         next
       }
     }
-    data.frame(res, original.search)
+    if (is.null(drop)) {
+      data.frame(res, original.search)
+    } else {
+      data.frame(res[!names(res) %in% drop], original.search)
+    }
   }

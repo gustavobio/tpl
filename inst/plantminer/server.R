@@ -27,6 +27,7 @@ shinyServer(function(input, output) {
     #out
    res <- data.frame(id = links, res[-1])
    names(res) <- gsub("\\.", " ", names(res))
-   res[c(1, 3, 22, 10, 11, 12, 13, 14, 23, 24)]
+   #res[c(1, 3, 22, 10, 11, 12, 13, 14, 23, 24)]
+   res
   }, options = list(bFilter = TRUE))
 })

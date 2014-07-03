@@ -3,7 +3,9 @@
 \alias{tpl.get}
 \title{Get plant taxonomical and distribution data}
 \usage{
-tpl.get(taxa, replace.synonyms = TRUE, suggest.names = TRUE)
+tpl.get(taxa, replace.synonyms = TRUE, suggest.names = TRUE,
+  drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker",
+  "ipni.id", "publication", "collation", "page", "date"))
 }
 \arguments{
 \item{taxa}{a character vector containing one or more taxa, without authors
@@ -12,6 +14,8 @@ see \code{\link{noauthors}} if you have a list with authorities}
 \item{replace.synonyms}{should the function automatically replace synonyms?}
 
 \item{suggest.names}{should the function try to suggest corrections for spelling errors?}
+
+\item{NULL}{or character vector with columns from original dataset to drop.}
 }
 \value{
 a data frame
