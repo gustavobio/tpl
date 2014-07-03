@@ -29,6 +29,8 @@ install_github("gustavobio/tpldata")
 
 #### Install tpl
 
+*Since `tpl` depends on `tpldata`, which is very large, it is likely that `tpl` will not be published on CRAN.*
+
 ```coffee
 install_github("gustavobio/tpl")
 ```
@@ -90,5 +92,5 @@ There is a web application included where one can simply paste names into a text
 ```
 web.tpl()
 ```
-*Click the screenshot for a larger view*
+*Click on the screenshot for an expanded view*
 ![](http://i.imgur.com/Kjbb9nx.png)
