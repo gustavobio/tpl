@@ -9,7 +9,7 @@ This R package includes functions to query the latest version of The Plant List 
 
 ## Data
 
-All data from The Plant List are included in [tpldata](http://github.com/gustavobio/tpldata). Please cite [The Plant List](http://www.theplantlist.org) accordingly. The data included in the package come from csv files they make available on their website.
+All data from The Plant List are included in [tpldata](http://github.com/gustavobio/tpldata). Please cite [The Plant List](http://www.theplantlist.org) accordingly. The data included in the package come from csv files they make available on their website. There are ~1.2 million entries in the dataset.
 
 ## Installation
 
@@ -29,7 +29,7 @@ install_github("gustavobio/tpldata")
 
 #### Install tpl
 
-*Since `tpl` depends on `tpldata`, which is very large, it is likely that `tpl` will not be published on CRAN.*
+Since `tpl` depends on `tpldata`, which is very large, it is likely that `tpl` will not be published on CRAN.
 
 ```coffee
 install_github("gustavobio/tpl")
@@ -41,7 +41,7 @@ The main function is `tpl.get`, which will fix misspelled names, replace synonym
 
 ```coffee
 library(tpl)
-### First calls are a bit slow, but the following ones are substantially faster.
+# First calls are a bit slow, but the following ones are substantially faster.
 tpl.get(c("Miconia albicans", "Myrcia lingua", "Cofea arabica"))
 ```
 
@@ -87,7 +87,7 @@ noauthors(sp)
 
 ## Web application
 
-There is a web application included where one can simply paste names into a textbox and get taxonomic information, links to the original data source, search within the results and export to a csv file.
+There is a local web application included where one can simply paste names into a textbox and get taxonomic information, links to the original data source, search within the results and export to a csv file.
 
 ```
 web.tpl()
