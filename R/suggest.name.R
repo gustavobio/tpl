@@ -31,7 +31,7 @@ suggest.name <-
     #if (grepl("Indet\\.", taxon)) return(taxon)
     ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", taxon))
     if (length(ident) != 0L) taxon <- unlist(strsplit(taxon, " "))[1]
-    if (taxon == "") return(NA)
+    if (!nzchar(taxon)) return(NA)
     initials <- substr(strsplit(taxon, " ")[[1]], 1, 1)
     if (!is.na(match(taxon, tpl.names[[initials[1]]][[initials[2]]]))) return(taxon)
     l1 <- length(taxon)

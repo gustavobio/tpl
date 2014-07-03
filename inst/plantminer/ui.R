@@ -4,6 +4,8 @@ shinyUI(fluidPage(
     sidebarPanel(width = 3,
                  checkboxInput("synonyms", label = "Replace synonyms", value = TRUE),
                  checkboxInput("suggest", label = "Correct misspelled names", value = TRUE),              
+                 sliderInput("distance", label = "Suggestion conservativeness",
+                             min = 0, max = 1, value = 0.9),
                  tags$form(
                    tags$textarea(id="taxa", rows=16, cols=5, "Miconia albicans\nMyrcia lingua\nCofea arabica"),
                    tags$br(),

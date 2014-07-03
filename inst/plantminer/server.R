@@ -7,7 +7,8 @@ shinyServer(function(input, output) {
       x <- unlist(strsplit(input$taxa, "\n"))
       res <- tpl.get(x, 
                       replace.synonyms = input$synonyms, 
-                      suggest.names = input$suggest
+                      suggest.names = input$suggest,
+                      suggestion.distance = input$distance
                       )
     }
     output$downloadData <- downloadHandler(
