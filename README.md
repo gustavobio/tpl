@@ -60,4 +60,5 @@ There is a web application included where one can simply paste names into a text
 ```
 web.tpl()
 ```
+*Click the screenshot for a larger view*
 ![](http://i.imgur.com/Kjbb9nx.png)
