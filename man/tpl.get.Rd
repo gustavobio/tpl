@@ -4,9 +4,10 @@
 \title{Get plant taxonomical and distribution data}
 \usage{
 tpl.get(taxa, replace.synonyms = TRUE, suggest.names = TRUE,
-  drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker",
-  "nomenclatural.status.from.original.data.source", "ipni.id", "source.id",
-  "publication", "collation", "page", "date"))
+  suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker",
+  "species.hybrid.marker", "nomenclatural.status.from.original.data.source",
+  "ipni.id", "source.id", "publication", "collation", "page", "date"),
+  apg.families = TRUE)
 }
 \arguments{
 \item{taxa}{a character vector containing one or more taxa, without authors
@@ -16,7 +17,7 @@ see \code{\link{noauthors}} if you have a list with authorities}
 
 \item{suggest.names}{should the function try to suggest corrections for spelling errors?}
 
-\item{NULL}{or character vector with columns from original dataset to drop.}
+\item{drop}{NULL or character vector with columns from original dataset to drop.}
 }
 \value{
 a data frame

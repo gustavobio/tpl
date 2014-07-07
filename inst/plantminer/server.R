@@ -8,7 +8,8 @@ shinyServer(function(input, output) {
       res <- tpl.get(x, 
                       replace.synonyms = input$synonyms, 
                       suggest.names = input$suggest,
-                      suggestion.distance = input$distance
+                      apg.families = input$apg,
+                      suggestion.distance = input$distance,
                       )
     }
     output$downloadData <- downloadHandler(

@@ -15,7 +15,7 @@
 #' tpl.get("Myrcia lingua")
 #' }
 tpl.get <-
-  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"))  {
+  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"), apg.families = TRUE)  {
     taxa <- trim(taxa)
     taxa <- taxa[nzchar(taxa)]
     if (length(taxa) == 0L) stop("No valid names provided.")
@@ -73,6 +73,7 @@ tpl.get <-
         } else {
           note <- c(note, "check +1 accepted")
         }
+        
         res[index, "note"] <- paste(note, collapse = "|")
         next
       }
@@ -146,6 +147,7 @@ tpl.get <-
         res[index, "note"] <- paste(note, collapse = "|")
         next
       }      
+  
       misapplied <- taxon %in% tpl.misapplied[[genus]]$name
       
       if (misapplied) {
@@ -170,6 +172,18 @@ tpl.get <-
         }
         res[index, "note"] <- paste(note, collapse = "|")
         next
+      }
+    }
+    if (apg.families) {
+      for (taxon in seq_len(nrow(res))) {
+        orig.family <- res[taxon, "family"]
+        is.old <- orig.family %in% apg$old
+        if (is.old) {
+          res[taxon, "family"] <- apg$new[which(apg$old == orig.family)]
+        }
+        if (!is.old && !orig.family %in% apg$new) {
+          res[taxon, "note"] <- paste(c(res[taxon, "note"], "family not in APG", collapse = "|"))
+        }
       }
     }
     if (is.null(drop)) {

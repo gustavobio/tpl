@@ -4,6 +4,7 @@ shinyUI(fluidPage(
     sidebarPanel(width = 3,
                  checkboxInput("synonyms", label = "Replace synonyms", value = TRUE),
                  checkboxInput("suggest", label = "Correct misspelled names", value = TRUE),              
+                 checkboxInput("apg", label = "APG families", value = FALSE), 
                  sliderInput("distance", label = "Suggestion conservativeness",
                              min = 0, max = 1, value = 0.9),
                  tags$form(
