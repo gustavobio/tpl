@@ -37,6 +37,15 @@ tpl.get <-
       #  taxon <- unlist(strsplit(taxon, " "))[1]
       if (!grepl(" ", taxon)) {
         res[index, "note"] <- "not full name"
+        if (taxon %in% names(tpl.accepted)) {
+          res[index, "family"] <- tpl.accepted[[taxon]][1,"family"]
+          res[index, "genus"] <- taxon
+        } else {
+          if (taxon %in% names(tpl.synonyms)) {
+            res[index, "family"] <- tpl.synonyms[[taxon]][1,"family"]
+            res[index, "genus"] <- taxon
+          }
+        }
         next
       }
       
