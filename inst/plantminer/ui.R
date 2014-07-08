@@ -1,4 +1,5 @@
-shinyUI(fluidPage(  
+shinyUI(fluidPage(
+  tags$title("Plantminer - The Plant List"),
   h1("Plantminer"),
   sidebarLayout(
     sidebarPanel(width = 3,
