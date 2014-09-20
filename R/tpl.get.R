@@ -31,10 +31,10 @@ tpl.get <-
                                              taxon))
       if (length(uncertain) != 0L) 
         taxon <- gsub("[a|c]f+\\.", "", taxon)
-      #ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", 
-      #                                   taxon))
-      #if (length(ident) != 0L) 
-      #  taxon <- unlist(strsplit(taxon, " "))[1]
+      ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", 
+                                         taxon))
+      if (length(ident) != 0L) 
+        taxon <- unlist(strsplit(taxon, " "))[1]
       if (!grepl(" ", taxon)) {
         res[index, "note"] <- "not full name"
         if (taxon %in% names(tpl.accepted)) {
@@ -88,7 +88,6 @@ tpl.get <-
       }
       
       synonym <- taxon %in% tpl.synonyms[[genus]]$name
-      
       if (synonym) {
         taxon.info <- tpl.synonyms[[genus]][which(tpl.synonyms[[genus]]$name %in% taxon), ]
         how.many.synonyms <- nrow(taxon.info)
@@ -130,7 +129,7 @@ tpl.get <-
             }
           }
           if (how.many.accepted > 1L) {
-            accepted.genus <- tpl.accepted.index$genus[match(unique(taxon.info$id), tpl.accepted.index$id)]
+            accepted.genus <- unique(tpl.accepted.index$genus[match(unique(taxon.info$accepted.id), tpl.accepted.index$id)])
             tpl.accepted.genus <- do.call(rbind.data.frame, tpl.accepted[accepted.genus])
             taxon.info <- tpl.accepted.genus[which(tpl.accepted.genus$id %in% taxon.info$accepted.id), ]
             really.accepted <- taxon.info$taxonomic.status.in.tpl == "Accepted"
@@ -186,12 +185,18 @@ tpl.get <-
     if (apg.families) {
       for (taxon in seq_len(nrow(res))) {
         orig.family <- res[taxon, "family"]
+        if (is.na(orig.family)) next
         is.old <- orig.family %in% apg$old
         if (is.old) {
           res[taxon, "family"] <- apg$new[which(apg$old == orig.family)]
         }
         if (!is.old && !orig.family %in% apg$new) {
-          res[taxon, "note"] <- paste(c(res[taxon, "note"], "family not in APG", collapse = "|"))
+          if (res[taxon, "note"] == "") {
+            fam.note  <- "family not in APG"
+          } else {
+            fam.note <- "|family not in APG"
+          }
+          res[taxon, "note"] <- paste(res[taxon, "note"], fam.note, sep = "")
         }
       }
     }

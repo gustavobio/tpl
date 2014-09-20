@@ -30,19 +30,29 @@ suggest.name <-
     #if (any(grepl(taxon, ignore.words, ignore.case = TRUE))) return(taxon)
     #if (grepl("Indet\\.", taxon)) return(taxon)
     ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", taxon))
-    if (length(ident) != 0L) taxon <- unlist(strsplit(taxon, " "))[1]
+    genus.only <- length(ident) != 0L | !grepl("\\s", taxon)
+    if (genus.only) {
+      taxon <- unlist(strsplit(taxon, " "))[1]
+      if (taxon %in% names(tpl.accepted)) return(taxon)
+    }
     if (!nzchar(taxon)) return(NA)
     initials <- substr(strsplit(taxon, " ")[[1]], 1, 1)
-    if (!is.na(match(taxon, tpl.names[[initials[1]]][[initials[2]]]))) return(taxon)
+    if (genus.only) {
+      candidates <- unique(unlist(lapply(strsplit(unlist(tpl.names[["M"]]), " "), `[`, 1)))
+    } else {
+      candidates <- tpl.names[[initials[1]]][[initials[2]]]
+    }
+    #browser()
+    if (!is.na(match(taxon, candidates))) return(taxon)
     l1 <- length(taxon)
-    l2 <- length(tpl.names[[initials[1]]][[initials[2]]])
-    out <- adist(taxon, tpl.names[[initials[1]]][[initials[2]]])
+    l2 <- length(candidates)
+    out <- adist(taxon, candidates)
     distance <- 1 - (out/pmax(nchar(taxon), 
-                                  nchar(tpl.names[[initials[1]]][[initials[2]]])))
+                                  nchar(candidates)))
     max.dist <- max(distance, na.rm = TRUE)
     if (max.dist >= max.distance) {
-      if (length(ident) == 0L) {
-        res <- tpl.names[[initials[1]]][[initials[2]]][distance == max(distance, na.rm = TRUE)][1]
+      if (genus.only) {
+        res <- candidates[distance == max(distance, na.rm = TRUE)][1]
         if (length(uncertain) == 0L) {
           return(res)
         } else {
@@ -50,7 +60,7 @@ suggest.name <-
           return(paste(res[1], uncertain, res[2:length(res)]))
         }
       } else {
-        paste(tpl.names[[initials[1]]][[initials[2]]][distance == max(distance, na.rm = TRUE)][1], ident, sep = "")
+        paste(candidates[distance == max(distance, na.rm = TRUE)][1], ident, sep = "")
       }
     } else {
       if (return.na) {
