@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
       filename = "results.csv",
       content = function(file = filename) {      
         # Write to a file specified by the 'file' argument
-        write.csv(res, file,
+        write.csv(data.frame(ids, res[-1]), file,
                   row.names = FALSE, quote = TRUE)
       }
     )
@@ -27,6 +27,7 @@ shinyServer(function(input, output) {
     #out <- data.frame(id = links, res[-1])
     #names(out) <- gsub("\\.", " ", names(out))
     #out
+   ids <- res[1]
    res <- data.frame(id = links, res[-1])
    names(res) <- gsub("\\.", " ", names(res))
    #res[c(1, 3, 22, 10, 11, 12, 13, 14, 23, 24)]
