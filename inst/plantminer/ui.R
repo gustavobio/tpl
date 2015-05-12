@@ -9,7 +9,7 @@ shinyUI(fluidPage(
                  sliderInput("distance", label = "Suggestion conservativeness",
                              min = 0, max = 1, value = 0.9),
                  tags$form(
-                   tags$textarea(id="taxa", rows=16, cols=5, "Miconia albicans\nMyrcia lingua\nCofea arabica"),
+                   tags$textarea(id="taxa", rows=16, cols=25, "Miconia albicans\nMyrcia lingua\nCofea arabica"),
                    tags$br(),
                    tags$input(type = "Submit"),
                    tags$i("(This may take a while)"))
