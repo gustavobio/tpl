@@ -1,5 +1,13 @@
 shinyUI(fluidPage(
   tags$title("Plantminer - The Plant List"),
+  tags$head(
+    tags$style(HTML("
+      td {
+        font-size = 10px;
+      }
+
+    "))
+  ),
   h1("Plantminer"),
   sidebarLayout(
     sidebarPanel(width = 3,

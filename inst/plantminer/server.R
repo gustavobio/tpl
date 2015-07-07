@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
       filename = "results.csv",
       content = function(file = filename) {      
         # Write to a file specified by the 'file' argument
-        write.csv(data.frame(ids, res[-1]), file,
+        write.csv(data.frame(res), file,
                   row.names = FALSE, quote = TRUE)
       }
     )
@@ -30,7 +30,6 @@ shinyServer(function(input, output) {
    #ids <- res[1]
    res <- data.frame(id = res[1], res[-1])
    names(res) <- gsub("\\.", " ", names(res))
-   #res[c(1, 3, 22, 10, 11, 12, 13, 14, 23, 24)]
-   res
-  }, options = list(bFilter = TRUE))
+   res[, c("id", "family", "name", "authorship", "source", "note", "original search")]
+  }, options = list(searching = TRUE))
 })
