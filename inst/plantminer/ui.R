@@ -1,13 +1,5 @@
-shinyUI(fluidPage(
+shinyUI(fluidPage(theme = "bootstrap.css", 
   tags$title("Plantminer - The Plant List"),
-  tags$head(
-    tags$style(HTML("
-      td {
-        font-size = 10px;
-      }
-
-    "))
-  ),
   h1("Plantminer"),
   sidebarLayout(
     sidebarPanel(width = 3,
@@ -15,21 +7,20 @@ shinyUI(fluidPage(
                  checkboxInput("suggest", label = "Correct misspelled names", value = TRUE),              
                  checkboxInput("apg", label = "APG families", value = FALSE), 
                  sliderInput("distance", label = "Suggestion conservativeness",
-                             min = 0, max = 1, value = 0.9),
+                             min = 0.5, max = 1, value = 0.9),
                  tags$form(
-                   tags$textarea(id="taxa", rows=16, cols=25, "Miconia albicans\nMyrcia lingua\nCofea arabica"),
+                   tags$textarea(id="taxa", rows=12, cols=19, "Miconia albicans\nMyrcia lingua\nCofea arabica"),
                    tags$br(),
-                   tags$input(type = "Submit"),
-                   tags$i("(This may take a while)"))
+                   tags$input(type = "Submit"))
     ),
     mainPanel(width = 9,
-              h5("Data"),
-              p("This application is an alternative front end for the tpl
-                package for R. All data here come from The Plant List v1.1. Please cite them accordingly. Send your suggestions and report bugs to Gustavo Carvalho at gustavo.bio@gmail.com."
-              ),
-              h5("Usage"),
-              p("Usage is simple: paste your taxa without authors in the textbox and hit submit. Click on the id to open the species page on The Plant List. There is a download button below to export data as a quoted csv file."),
               dataTableOutput(outputId="contents"),
-              downloadButton('downloadData', 'Download results in csv format')
+              downloadButton('downloadData', 'Download full results in csv format'),
+              tags$p('All data come from The Plant List v1.1. Please cite the accordingly.',
+                     tags$br(),
+              'Download code to run a local version and file suggestions or bug reports at', 
+              tags$a(href = "http://www.github.com/gustavobio/tpl", "github."), style = "margin-top:20px"),
+              tags$p('Coded by Gustavo Carvalho <gustavo.bio@gmail.com>', style = "font-size:14px")
+              
     ))
 ))

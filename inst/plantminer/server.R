@@ -9,7 +9,7 @@ shinyServer(function(input, output) {
                       replace.synonyms = input$synonyms, 
                       suggest.names = input$suggest,
                       apg.families = input$apg,
-                      suggestion.distance = input$distance,
+                      suggestion.distance = input$distance
                       )
     }
     output$downloadData <- downloadHandler(
@@ -27,9 +27,8 @@ shinyServer(function(input, output) {
     #out <- data.frame(id = links, res[-1])
     #names(out) <- gsub("\\.", " ", names(out))
     #out
-   #ids <- res[1]
    res <- data.frame(id = res[1], res[-1])
    names(res) <- gsub("\\.", " ", names(res))
    res[, c("id", "family", "name", "authorship", "source", "note", "original search")]
-  }, options = list(searching = TRUE))
+  }, options = list(searching = FALSE, paging = TRUE))
 })
