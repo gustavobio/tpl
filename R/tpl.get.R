@@ -207,6 +207,7 @@ tpl.get <-
     }
     if (return.synonyms) {
       synonyms <- do.call("rbind", tpl.synonyms)
+      rownames(synonyms) <- 1:nrow(synonyms)
       names(synonyms)[names(synonyms) == "id"] <- "synonym.id"
       res.synonyms <- merge(res[, c("id", "name", "original.search")], synonyms, by.x = "id", by.y = "accepted.id", suffixes = c(".accepted", ".synonym"))
       list(all.entries = res, synonyms = res.synonyms)
