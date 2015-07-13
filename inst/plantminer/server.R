@@ -14,11 +14,15 @@ shinyServer(function(input, output) {
                       )
     }
     output$downloadData <- downloadHandler(
-      filename = "results.csv",
+      filename = ifelse(input$get.synonyms, "synonyms.csv", "results.csv"),
       content = function(file = filename) {      
-        # Write to a file specified by the 'file' argument
-        write.csv(data.frame(res), file,
-                  row.names = FALSE, quote = TRUE)
+        if (input$get.synonyms) {
+          write.csv(data.frame(res$synonyms), file,
+                    row.names = FALSE, quote = TRUE)
+        } else {
+          write.csv(data.frame(res), file,
+                    row.names = FALSE, quote = TRUE)
+        }
       }
     )
     
