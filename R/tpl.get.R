@@ -15,7 +15,7 @@
 #' tpl.get("Myrcia lingua")
 #' }
 tpl.get <-
-  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"), apg.families = TRUE)  {
+  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"), apg.families = TRUE, return.synonyms = FALSE)  {
     taxa <- trim(taxa)
     taxa <- taxa[nzchar(taxa)]
     if (length(taxa) == 0L) stop("No valid names provided.")
@@ -201,8 +201,16 @@ tpl.get <-
       }
     }
     if (is.null(drop)) {
-      data.frame(res, original.search)
+      res <- data.frame(res, original.search)
     } else {
-      data.frame(res[!names(res) %in% drop], original.search)
+      res <- data.frame(res[!names(res) %in% drop], original.search)
+    }
+    if (return.synonyms) {
+      synonyms <- do.call("rbind", tpl.synonyms)
+      names(synonyms)[names(synonyms) == "id"] <- "synonym.id"
+      res.synonyms <- merge(res[, c("id", "name", "original.search")], synonyms, by.x = "id", by.y = "accepted.id", suffixes = c(".accepted", ".synonym"))
+      list(all.entries = res, synonyms = res.synonyms)
+    } else {
+      res
     }
   }
