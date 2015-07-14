@@ -30,7 +30,11 @@ shinyServer(function(input, output) {
     #names(out) <- gsub("\\.", " ", names(out))
     #out
     if (input$get.synonyms) {
-      return(res$synonyms)
+      if (nrow(res$synonyms) > 0L) {
+        return(res$synonyms)
+      } else {
+        return(data.frame(notes = "no synonyms found"))
+      }
     }
     res <- data.frame(id = res[1], res[-1])
     names(res) <- gsub("\\.", " ", names(res))

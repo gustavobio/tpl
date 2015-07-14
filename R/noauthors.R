@@ -26,10 +26,10 @@ noauthors <- function(taxon) {
   }
   if (grepl("^[a-z].*[a-z]+$", taxon.split.unlist[2])) {
     if (length(taxon.split.unlist) == 2) return(taxon)
-    matches <- unlist(lapply(taxon.split, function(x) x[3:length(x)] %in% words))
+    matches <- unlist(lapply(taxon.split, function(x) x[3:length(x)] %in% tpldata::words))
     res <- paste(taxon.split.unlist[c(TRUE, TRUE, matches)], collapse = " ")
   } else {
-    matches <- unlist(lapply(taxon.split, function(x) x[2:length(x)] %in% words))
+    matches <- unlist(lapply(taxon.split, function(x) x[2:length(x)] %in% tpldata::words))
     res <- paste(taxon.split.unlist[c(TRUE, matches)], collapse = " ")
   }
   if (length(ident) == 0L) {

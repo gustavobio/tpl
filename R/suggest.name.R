@@ -33,14 +33,14 @@ suggest.name <-
     genus.only <- length(ident) != 0L | !grepl("\\s", taxon)
     if (genus.only) {
       taxon <- unlist(strsplit(taxon, " "))[1]
-      if (taxon %in% names(tpl.accepted)) return(taxon)
+    if (taxon %in% names(tpldata::tpl.accepted)) return(taxon)
     }
     if (!nzchar(taxon)) return(NA)
     initials <- substr(strsplit(taxon, " ")[[1]], 1, 1)
     if (genus.only) {
-      candidates <- unique(unlist(lapply(strsplit(unlist(tpl.names[["M"]]), " "), `[`, 1)))
+      candidates <- unique(unlist(lapply(strsplit(unlist(tpldata::tpl.names[["M"]]), " "), `[`, 1)))
     } else {
-      candidates <- tpl.names[[initials[1]]][[initials[2]]]
+      candidates <- tpldata::tpl.names[[initials[1]]][[initials[2]]]
     }
     #browser()
     if (!is.na(match(taxon, candidates))) return(taxon)
