@@ -1,9 +1,6 @@
 ex <- tpl.get(c("Miconia albicans", "Myrcia lingua", "Cofea arabica"))
 shinyServer(function(input, output) {
   output$contents <- renderDataTable({
-    if (input$taxa == "Miconia albicans\nMyrcia lingua\nCofea arabica" & input$synonyms & input$suggest) {
-      res <- ex
-    } else {
       x <- unlist(strsplit(input$taxa, "\n"))
       res <- tpl.get(x, 
                       replace.synonyms = input$synonyms, 
@@ -11,8 +8,8 @@ shinyServer(function(input, output) {
                       apg.families = input$apg,
                       suggestion.distance = input$distance,
                       return.synonyms = input$get.synonyms
-                      )
-    }
+      )
+    
     output$downloadData <- downloadHandler(
       filename = ifelse(input$get.synonyms, "synonyms.csv", "results.csv"),
       content = function(file = filename) {      

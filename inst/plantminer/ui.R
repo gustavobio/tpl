@@ -11,8 +11,8 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                              min = 0.5, max = 1, value = 0.9),
                  tags$form(
                    tags$textarea(id="taxa", rows=12, cols=19, "Miconia albicans\nMyrcia lingua\nCofea arabica"),
-                   tags$br(),
-                   tags$input(type = "Submit"))
+                   tags$br()),
+                   submitButton(text = "Submit", icon("refresh"))
     ),
     mainPanel(width = 9,
               dataTableOutput(outputId="contents"),
