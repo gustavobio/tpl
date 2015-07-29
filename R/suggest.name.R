@@ -42,7 +42,6 @@ suggest.name <-
     } else {
       candidates <- tpldata::tpl.names[[initials[1]]][[initials[2]]]
     }
-    #browser()
     if (!is.na(match(taxon, candidates))) return(taxon)
     l1 <- length(taxon)
     l2 <- length(candidates)

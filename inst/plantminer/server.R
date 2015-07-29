@@ -23,6 +23,13 @@ shinyServer(function(input, output) {
       }
     )
     
+    output$downloadPhylomatic <- downloadHandler(
+      filename = "phylomatic.txt",
+      content = function(file = filename) {
+        cat(df2phylomatic(res), file = file, sep = "\n")
+      }
+    )
+    
     links <- 
       paste("<a target=\"_blank\" href = \"http://www.theplantlist.org/tpl1.1/record/", res$id, "\">", res$id,"</a>", sep = "")
     links <- gsub("NA", NA, links)
