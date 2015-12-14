@@ -9,9 +9,12 @@ Depends:
     tpldata,
     R (>= 3.0.2)
 Imports:
-    shiny, dplyr
+    shiny,
+    dplyr,
+    httr
 Description: This is a set of tools for interacting with The Plant List. With
     this package, you can quickly look up up to thousands of plant names,
     automatically correcting spelling errors and fixing synonyms.
 License: MIT + file LICENSE
 LazyData: yes
+RoxygenNote: 5.0.1

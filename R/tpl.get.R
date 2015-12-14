@@ -11,6 +11,7 @@
 #' @param drop NULL or character vector with columns from original dataset to drop.
 #' @param apg.families Return APG families?
 #' @param return.synonyms Return a list of synonyms instead of the regular dataset?
+#' @param parse Parse names through the GBIF parser?
 #' @return a data frame or a list of data frames if return.synonyms = TRUE
 #' @export
 #' @examples
@@ -18,7 +19,7 @@
 #' tpl.get("Myrcia lingua")
 #' }
 tpl.get <-
-  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"), apg.families = TRUE, return.synonyms = FALSE)  {
+  function(taxa, replace.synonyms = TRUE, suggest.names = TRUE, suggestion.distance = 0.9, drop = c("major.group", "genus.hybrid.marker", "species.hybrid.marker", "nomenclatural.status.from.original.data.source", "ipni.id", "source.id", "publication", "collation", "page", "date"), apg.families = TRUE, return.synonyms = FALSE, parse = FALSE)  {
     taxa <- trim(taxa)
     taxa <- taxa[nzchar(taxa)]
     if (length(taxa) == 0L) stop("No valid names provided.")
@@ -29,6 +30,16 @@ tpl.get <-
     for (taxon in taxa) {
       note <- NULL
       index <- index + 1
+      if (parse) {
+        url <- "http://api.gbif.org/v1/parser/name"
+        request <- try(POST(url, body = list(taxon), encode = "json"))
+        if (inherits(request, "try-error")) {
+          warning("Couldn't connect with the GBIF data servers. Check your internet connection or try again later.")
+        } else {
+          warn_for_status(request)
+          taxon <- content(request)[[1]]$canonicalName
+        }
+      }
       taxon <- fixCase(taxon)
       uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
                                              taxon))
