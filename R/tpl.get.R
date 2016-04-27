@@ -37,7 +37,7 @@ tpl.get <-
           warning("Couldn't connect with the GBIF data servers. Check your internet connection or try again later.")
         } else {
           warn_for_status(request)
-          taxon <- content(request)[[1]]$canonicalName
+          taxon <- content(request)[[1]]$canonicalNameWithMarker
         }
       }
       taxon <- fixCase(taxon)
